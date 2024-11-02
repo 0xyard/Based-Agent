@@ -1,20 +1,22 @@
+import os
+from dotenv import load_dotenv
 import time
 import json
 from swarm import Swarm
 from swarm.repl import run_demo_loop
 from agents import based_agent
 from openai import OpenAI
-import os
 
-# Get configuration from environment variables
-OPENAI_ENDPOINT = os.environ.get("OPENAI_ENDPOINT")
-SWARM_DEFAULT_MODEL = os.environ.get("SWARM_DEFAULT_MODEL")
+if os.environ.get('ENVIRONMENT', 'development') == 'development':
+#     load_dotenv()
+    os.environ['OPENAI_BASE_URL']='http://localhost:11434/v1'
 
 # this is the main loop that runs the agent in autonomous mode
 # you can modify this to change the behavior of the agent
 # the interval is the number of seconds between each thought
 def run_autonomous_loop(agent, interval=10):
     client = Swarm()
+    print(client.client.base_url)
     messages = []
 
     print("Starting autonomous Based Agent loop...")

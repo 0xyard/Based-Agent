@@ -12,7 +12,8 @@ from cdp.errors import ApiError, UnsupportedAssetError
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv()
+if os.environ.get('ENVIRONMENT', 'development') == 'development':
+    load_dotenv()
 
 # Get configuration from environment variables
 API_KEY_NAME = os.environ.get("CDP_API_KEY_NAME")
@@ -359,6 +360,7 @@ based_agent = Agent(
         swap_assets,
         register_basename
     ],
+    model="llama3.1:8b"
 )
 
 # add the following import to the top of the file, add the code below it, and add the new functions to the based_agent.functions list
